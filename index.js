@@ -16,7 +16,7 @@ const port = process.env.PORT;
 app.use(methodOverride('_method'));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
-app.set('views', './views');
+app.set('views', `${__dirname}/views`);
 app.set('view engine', 'pug');
 //fash
 app.use(cookieParser('ASDUHHSSS'));
@@ -25,7 +25,7 @@ app.use(flash());
 //end fash
 //App Locals Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin
-app.use(express.static("public"));
+app.use(express.static(`${__dirname}/public`));
 //route
 route(app);
 routeAdmin(app);

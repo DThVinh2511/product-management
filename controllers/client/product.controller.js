@@ -9,7 +9,6 @@ module.exports.index = async (req, res) => {
     item.priceNew = (item.price*(100-item.discountPercentage)/100).toFixed(0);
     return item;
   })
-  console.log(newProducts);
   res.render("client/page/products/index", {
     pageTitle: "Danh sach san pham",
     products: newProducts
