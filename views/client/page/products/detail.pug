@@ -1,0 +1,32 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+block main
+
+  .container.my-3 
+    .row 
+      .col-12 
+        if(products.title) 
+          h1(class="mb-4") #{products.title}
+        
+        if(products.price) 
+          div(class="mb-4") Gia: <b>#{products.price}</b>
+        
+        if(products.discountPercentage) 
+          div(class="mb-4") Giam gia: <b>#{products.discountPercentage}%</b>
+
+        if(products.stock) 
+          div(class="mb-4") Con lai: <b>#{products.stock}</b>
+
+        if(products.stock) 
+          div(class="mb-4") 
+            img(
+              src=products.thumbnail 
+              style="width: 100px"
+            )
+
+        if(products.position)
+          div(class="mb-4") Vi tri: <b>#{products.position}</b>
+
+        if(products.description)
+          div(class="mb-4") Mo ta: #{products.description}
+
