@@ -20,6 +20,7 @@ router.get('/edit/:id', controller.formEditItem);
 router.patch(
   '/edit/:id',
   upload.single('thumbnail'),
+  uploadCloud.uploadImage,
   validate.createPostTitle,
   controller.editItem
 );

@@ -30,8 +30,18 @@ module.exports.product = async (req, res) => {
     countProducts
   )
   //end pagination
+
+  // sort
+  let sort = {};
+  if(req.query.sortKey && req.query.sortValue) {
+    sort[req.query.sortKey] = req.query.sortValue;
+  }
+  else {
+    sort.position = "desc";
+  }
+  // end sort
   const products = await Product.find(find)
-    .sort({position: "desc"})
+    .sort(sort)
     .limit(opjectPagination.limitItem)
     .skip(opjectPagination.skip);
   res.render("admin/pages/products/index", {
@@ -144,9 +154,6 @@ module.exports.editItem = async (req, res) => {
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
   req.body.stock = parseInt(req.body.stock);
   req.body.position = parseInt(req.body.position);
-  if(req.file.filename) {
-    req.body.thumbnail = `/uploads/${req.file.filename}`;
-  }
   try {
     await Product.updateOne({ _id: id }, req.body);
     req.flash('success', 'Cap nhat thanh cong!');

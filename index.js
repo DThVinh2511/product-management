@@ -10,6 +10,7 @@ const route = require("./routes/client/index.route");
 const routeAdmin = require("./routes/admin/index.route");
 const systemConfig = require("./config/system");
 database.connect();
+const path = require('path');
 const app = express()
 const port = process.env.PORT;
 
@@ -23,6 +24,9 @@ app.use(cookieParser('ASDUHHSSS'));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
 //end fash
+//tiny MCE
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+//end tiny MCE
 //App Locals Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin
 app.use(express.static(`${__dirname}/public`));

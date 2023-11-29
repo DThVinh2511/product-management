@@ -36,7 +36,7 @@ block main
     div(class="mb-4") Vi tri: <b>#{products.position}</b>
 
   if(products.description)
-    div(class="mb-4") #{products.description}
+    div(class="mb-4") !{products.description}
 
   a(
     href=`${prefixAdmin}/products/edit/${products.id}`
