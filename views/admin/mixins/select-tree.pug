@@ -1,0 +1,6 @@
+mixin select-tree(newRecords, index = 1)
+  each item in newRecords
+    -const confix = Array(index+1).join("-- ")
+    option(value=item.id) #{confix}#{item.title}
+      if item.children && item.children.length > 0 
+        +select-tree(item.children, index+1)

@@ -1,5 +1,6 @@
 const productsCategory = require("../../models/products-category.model");
 const systemConfig = require("../../config/system");
+const createTreeHelpers = require("../../helpers/createTree");
 
 // [GET] /admin/product
 module.exports.product = async (req, res) => {
@@ -7,16 +8,23 @@ module.exports.product = async (req, res) => {
     deleted: false
   };
   const records = await productsCategory.find(find);
+  const newRecords = createTreeHelpers.tree(records);
   res.render("admin/pages/products-category/index", {
     pageTitle: "products-category",
-    records: records
+    newRecords: newRecords
   });
 }
 // [GET] /admin/products-category/create
 module.exports.create = async (req, res) => {
-  
+  let find = {
+    deleted: false
+  };
+  const records = await productsCategory.find(find);
+  const newRecords = createTreeHelpers.tree(records);
+  console.log(newRecords);
   res.render("admin/pages/products-category/create", {
     pageTitle: "Them moi danh muc san pham",
+    newRecords: newRecords
   });
 }
 // [POST] /admin/products-category/create
