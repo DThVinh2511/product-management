@@ -1,0 +1,72 @@
+extends ../../layouts/defaults.pug
+//- include ../../mixins/search.pug
+//- include ../../mixins/pagination.pug
+//- include ../../mixins/formChangeMulti.pug
+include ../../mixins/alert.pug
+block main
+  +alert-success(5000)
+  +alert-error(5000)
+  h1 Trang nhom quyen
+
+  .card.md-3 
+    .card-header Danh sach
+    .card-body 
+      .row 
+        .col-8
+          //- +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+        .col-4 
+          a(
+            href=`${prefixAdmin}/roles/create`
+            class="btn btn-outline-success"
+          ) + Them moi
+      
+      table(
+        class = "table table-hover table-sm"
+        checkbox-multi
+      ) 
+        thead 
+          tr 
+            th 
+              input(type="checkbox" name="checkall")
+            th STT
+            th Tieu de
+            th Mo Ta
+            th Hanh dong
+
+        tbody 
+          if(record.length > 0)
+            each item, index in record 
+              tr 
+                td 
+                  input(type="checkbox" name="id" value=item.id)
+                td #{index + 1}
+                td #{item.title}
+                td #{item.description}
+                td 
+                  a(
+                    href=`${prefixAdmin}/roles/detail/${item.id}`
+                    class="btn btn-secondary btn-sm "
+                  ) Chi tiet 
+                  a(
+                    href=`${prefixAdmin}/roles/edit/${item.id}`
+                    class="btn btn-warning btn-sm ml-1"
+                  ) Chinh Sua 
+                  button(
+                    class="btn btn-danger btn-sm ml-1"
+                    data-id=item.id
+                    button-delete
+                  ) Xoa 
+  form(
+    action=``
+    method="POST"
+    id="change-status"
+    data-path=`${prefixAdmin}/products/change-status`
+  ) 
+  form(
+    action=``
+    method="POST"
+    id="form-delete-item"
+    data-path=`${prefixAdmin}/roles/delete`
+  ) 
+  script(src="/admin/js/product.js")
+    
