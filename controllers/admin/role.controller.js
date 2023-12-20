@@ -81,5 +81,4 @@ module.exports.permissionsPatch = async (req, res) => {
     req.flash('error', 'Cap nhat that bai!');
     res.redirect("back");
   }
-  
 }
