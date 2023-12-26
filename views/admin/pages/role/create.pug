@@ -3,30 +3,33 @@ include ../../mixins/alert.pug
 
 block main 
   +alert-error(5000)
-  h1(class="mb-4") Them moi nhom quyen
+  if(role.permissions.includes("roles_edit"))
+    h1(class="mb-4") Them moi nhom quyen
 
-  form(
-    action=`${prefixAdmin}/roles/create`
-    method="POST"
-  )
-    div(class="form-group")
-      label(for="title") Tieu de 
-      input(
-        type="text"
-        class="form-control"
-        id="title"
-        name="title"
-        required
-      )
-    div(class="form-group")
-      label(for="desc") Mo ta
-      input(
-        class="form-control"
-        id="desc"
-        name="description"
-      )
-    div(class="form-group")
-      button(
-        type ="submit"
-        class="btn btn-primary"
-      ) Tao moi
+    form(
+      action=`${prefixAdmin}/roles/create`
+      method="POST"
+    )
+      div(class="form-group")
+        label(for="title") Tieu de 
+        input(
+          type="text"
+          class="form-control"
+          id="title"
+          name="title"
+          required
+        )
+      div(class="form-group")
+        label(for="desc") Mo ta
+        input(
+          class="form-control"
+          id="desc"
+          name="description"
+        )
+      div(class="form-group")
+        button(
+          type ="submit"
+          class="btn btn-primary"
+        ) Tao moi
+  else 
+    h1(class="text-center") Ban khong co quyen truy cap

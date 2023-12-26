@@ -3,14 +3,19 @@
     ul 
       li 
         a(href=`${prefixAdmin}/dashboard`) Tong quan 
-      li 
-        a(href=`${prefixAdmin}/products-category`) Danh muc San pham
-      li 
-        a(href=`${prefixAdmin}/products`) Danh sach San pham
-      li 
-        a(href=`${prefixAdmin}/roles`) Nhom quyen
-      li 
-        a(href=`${prefixAdmin}/roles/permissions`) Phan quyen
-      li 
-        a(href=`${prefixAdmin}/accounts`) Danh sach tai khoan
+      if(role.permissions.includes("products-category_view"))
+        li 
+          a(href=`${prefixAdmin}/products-category`) Danh muc San pham
+      if(role.permissions.includes("products_view"))
+        li 
+          a(href=`${prefixAdmin}/products`) Danh sach San pham
+      if(role.permissions.includes("roles_view"))
+        li 
+          a(href=`${prefixAdmin}/roles`) Nhom quyen
+      if(role.permissions.includes("roles_permissions"))
+        li 
+          a(href=`${prefixAdmin}/roles/permissions`) Phan quyen
+      if(role.permissions.includes("accounts_view"))
+        li 
+          a(href=`${prefixAdmin}/accounts`) Danh sach tai khoan
 
