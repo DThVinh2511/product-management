@@ -55,7 +55,14 @@ module.exports.product = async (req, res) => {
         product.createdBy.fullName = user.fullName;
       }
     }
-  }
+    const updateBy = product.updatedBy[product.updatedBy.length - 1];
+    if(updateBy) {
+      const user = await Account.findOne({_id: updateBy.account_id });
+      if(user) {
+        updateBy.accountFullName = user.fullName;
+      }
+    }
+  };
   res.render("admin/pages/products/index", {
     pageTitle: "products",
     products: products,
@@ -78,13 +85,23 @@ module.exports.changeMulti = async (req, res) => {
   // console.log(req.body);
   const type = req.body.type;
   const ids = req.body.ids.split(", ");
+  const updatedBy = {
+    account_id: res.locals.user.id,
+    updatedAt: new Date(),
+  }
   switch (type) {
     case "active":
-      await Product.updateMany({_id: { $in: ids } }, {status: "active"});
+      await Product.updateMany({_id: { $in: ids } }, {
+        status: "active",
+        $push: { updatedBy: updatedBy }
+      });
       req.flash('success', `Ban da cap nhat thanh cong ${ids.length} san pham`);
       break;
     case "inactive":
-      await Product.updateMany({_id: { $in: ids } }, {status: "inactive"});
+      await Product.updateMany({_id: { $in: ids } }, {
+        status: "inactive",
+        $push: { updatedBy: updatedBy }
+      });
       req.flash('success', `Ban da cap nhat thanh cong ${ids.length} san pham`);
       break;
     case "delete-all":
@@ -94,7 +111,8 @@ module.exports.changeMulti = async (req, res) => {
         deletedBy: {
           account_id: res.locals.user.id,
           deletedAt: new Date()
-        }
+        },
+        $push: { updatedBy: updatedBy }
       });
       req.flash('success', `Ban da xoa thanh cong ${ids.length} san pham`);
       break;
@@ -102,7 +120,10 @@ module.exports.changeMulti = async (req, res) => {
       for (const item of ids) {
         let [id, position] = item.split("-");
         position = parseInt(position);
-        await Product.updateOne({_id: id}, { position: position});
+        await Product.updateOne({_id: id}, { 
+          position: position,
+          $push: { updatedBy: updatedBy }
+        });
       };
       req.flash('success', `Ban da doi vi tri thanh cong ${ids.length} san pham`);
       break;
@@ -188,7 +209,14 @@ module.exports.editItem = async (req, res) => {
   req.body.stock = parseInt(req.body.stock);
   req.body.position = parseInt(req.body.position);
   try {
-    await Product.updateOne({ _id: id }, req.body);
+    const updatedBy = {
+      account_id: res.locals.user.id,
+      updatedAt: new Date(),
+    };
+    await Product.updateOne({ _id: id }, {
+      ...req.body,
+      $push: { updatedBy: updatedBy }
+    });
     req.flash('success', 'Cap nhat thanh cong!');
   } catch (error) {
     req.flash('error', 'Cap nhat that bai!');
