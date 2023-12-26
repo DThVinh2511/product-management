@@ -4,6 +4,7 @@ include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/formChangeMulti.pug
 include ../../mixins/alert.pug
+include ../../mixins/moment.pug
 block main
   +alert-success(5000)
   +alert-error(5000)
@@ -72,6 +73,7 @@ block main
               th Gia
               th Vi tri
               th Trang thai
+              th Nguoi tao
               th Hanh dong
 
           tbody 
@@ -126,6 +128,12 @@ block main
                         data-status = item.status
                         class="badge badge-danger"
                       ) Dung hoat dong
+                td 
+                  if(item.createdBy.account_id)
+                    p #{item.createdBy.fullName}
+                    +momentDate(item.createdBy.createdAt)
+                    +momentTime(item.createdBy.createdAt)
+                  
                 td 
                   a(
                     href=`${prefixAdmin}/products/detail/${item.id}`
