@@ -77,7 +77,7 @@ module.exports.edit = async (req, res) => {
   }
 }
 
-// [GET] /admin/accounts/edit/:id
+// [PATCH] /admin/accounts/edit/:id
 module.exports.editPatch = async (req, res) => {
   const id = req.params.id;
   const emailExist = await Account.findOne({

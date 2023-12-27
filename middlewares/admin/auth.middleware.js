@@ -9,7 +9,7 @@ module.exports.requiredAuth = async (req, res, next) => {
       token: req.cookies.token,
       deleted: false,
       status: "active"
-    }).select("-password -token -phone");
+    }).select("-password -token");
     const role = await Role.findOne({
       _id: user.role_id,
       deleted: false

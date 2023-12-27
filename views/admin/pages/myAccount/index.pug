@@ -1,0 +1,28 @@
+extends ../../layouts/defaults.pug
+
+block main
+  h1(class="mb-4") Thong tin ca nhan
+
+  if(user.avatar)
+    img(src=user.avatar width="150px" class="mb-3")
+  else 
+    img(src="https://res.cloudinary.com/ddqaug6dy/image/upload/v1703643304/xvkl6g9aqbotnsbyo7sg.jpg" width="150px" class="mb-3")
+
+  if(user.fullName)
+    p Họ tên: #{user.fullName}
+  if(user.email)
+    p Email: #{user.email}
+  if(user.phone)
+    p Phone: #{user.phone}
+  
+  p 
+    span Trạng thái: 
+    span #{user.status == 'active' ? "Hoạt động": "Dừng hoạt động"}
+
+  if(user.role_id)
+    p Quyền: #{role.title}
+
+  a(
+    href=`${prefixAdmin}/my-account/edit`
+    class="btn btn-primary"
+  ) Chỉnh sửa thông tin
